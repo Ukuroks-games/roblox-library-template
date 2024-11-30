@@ -1,5 +1,7 @@
 {
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4
-
+	"editor.insertSpaces": true,
+	"editor.defaultFormatter": "JohnnyMorganz.stylua",
+	
+	"luau-lsp.sourcemap.rojoProjectFile": "${workspaceFolderBasename}.project.json",
+	
 }

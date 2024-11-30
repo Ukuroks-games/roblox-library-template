@@ -2,6 +2,7 @@
     "recommendations": [
         "johnnymorganz.stylua",
         "evaera.vscode-rojo",
-        "johnnymorganz.luau-lsp"
+        "johnnymorganz.luau-lsp",
+        "usernamehw.errorlens"
     ]
 }
