@@ -10,4 +10,6 @@
 wally.lock
 sourcemap.json
 
-Packages/
+Packages/_Index
+DevPackages/_Index
+ServerPackages/_Index
