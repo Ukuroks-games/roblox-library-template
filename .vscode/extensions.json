@@ -3,6 +3,7 @@
         "johnnymorganz.stylua",
         "evaera.vscode-rojo",
         "johnnymorganz.luau-lsp",
-        "usernamehw.errorlens"
+        "usernamehw.errorlens",
+        "streetsidesoftware.code-spell-checker"
     ]
 }
