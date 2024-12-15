@@ -4,6 +4,7 @@
         "evaera.vscode-rojo",
         "johnnymorganz.luau-lsp",
         "usernamehw.errorlens",
-        "streetsidesoftware.code-spell-checker"
+        "streetsidesoftware.code-spell-checker",
+        "github.vscode-github-actions"
     ]
 }

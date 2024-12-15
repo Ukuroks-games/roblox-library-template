@@ -17,5 +17,4 @@
 	],
 
 	"luau-lsp.sourcemap.rojoProjectFile": "${workspaceFolderBasename}.project.json",
-	
 }
