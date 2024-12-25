@@ -17,4 +17,5 @@
 	],
 
 	"luau-lsp.sourcemap.rojoProjectFile": "${workspaceFolderBasename}.project.json",
+	"luau-lsp.platform.type": "roblox"
 }
