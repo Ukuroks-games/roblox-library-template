@@ -1,5 +1,5 @@
 [package]
-name = "owner/packageName"
+name = "owner/packagename"
 
 description = "description of package"
 
@@ -18,13 +18,7 @@ authors = ["You <you mail>"]
 
 exclude = ["*"]
 
-include = [
-	"src",
-	"src/**",
-	"wally.toml",
-	"README.md",
-	"init.lua"
-]
+include = ["src", "src/**", "wally.toml", "README.md", "init.lua"]
 
 private = false
 
@@ -35,4 +29,3 @@ private = false
 
 
 [dev-dependencies]
-
