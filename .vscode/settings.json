@@ -1,6 +1,12 @@
 {
 	"editor.insertSpaces": false,
 	"editor.defaultFormatter": "JohnnyMorganz.stylua",
+	"[yaml]": {
+        	"editor.insertSpaces": true,
+        	"editor.tabSize": 2,
+        	"editor.autoIndent": "advanced",
+        	"diffEditor.ignoreTrimWhitespace": false
+    	},
 	
 	"cSpell.enabled": true,
 	"cSpell.words": [
