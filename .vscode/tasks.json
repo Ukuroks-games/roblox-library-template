@@ -23,17 +23,6 @@
         },
         {
             "type": "shell",
-            "label": "Build game",
-            "command": "rojo build ${workspaceFolderBasename}.project.json --output ${workspaceFolderBasename}.rbxl && exit",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "Build game",
-            "dependsOn": ["Load depends"]
-        },
-        {
-            "type": "shell",
             "label": "Build tests",
             "detail": "Build tests place",
             "command": "rojo build tests.project.json --output tests.rbxl && exit",
@@ -45,9 +34,9 @@
         },
         {
             "type": "shell",
-            "label": "Generate sourcemap for game",
-            "detail": "Generate sourcemap for game project",
-            "command": "rojo sourcemap ${workspaceFolderBasename}.project.json --output sourcemap.json && exit",
+            "label": "Generate sourcemap for tests",
+            "detail": "Generate sourcemap for tests project",
+            "command": "make sourcemap && exit",
             "group": {
                 "kind": "none"
             },
@@ -55,14 +44,14 @@
         },
         {
             "type": "shell",
-            "label": "Generate sourcemap for tests",
-            "detail": "Generate sourcemap for tests project",
-            "command": "rojo sourcemap tests.project.json --output sourcemap.json && exit",
+            "label": "Lint",
+            "detail": "Run selene",
+            "command": "make lint && exit",
             "group": {
-                "kind": "none"
+                "kind": "none",
             },
             "dependsOn": ["Load depends"]
-        }
+        },
     ],
     "windows": {
         "options": {
