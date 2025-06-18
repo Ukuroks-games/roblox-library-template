@@ -19,7 +19,16 @@
             },
             "detail": "Install all project depends",
             "problemMatcher": [],
-            "dependsOn": ["Install programs"]
+          
+        },
+        {
+            "type": "shell",
+            "label": "Publish",
+            "detail": "Putblish this library as wally package",
+            "command": "make publish && exit",
+            "group": {
+                "kind": "none"
+            },
         },
         {
             "type": "shell",

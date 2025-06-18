@@ -4,6 +4,7 @@ PACKAGE_NAME = $(LIBNAME).zip
 
 CP = cp -rf
 MV = mv -f
+RM = rm -rf
 
 ./build: 
 	mkdir build
@@ -17,7 +18,7 @@ package: configure
 	wally package --output $(PACKAGE_NAME) --project-path build
 
 publish: configure
-	wally publish
+	wally publish --project-path build
 
 sourcemap:
 	rojo sourcemap tests.project.json --output sourcemap.json
@@ -26,4 +27,4 @@ lint:
 	selene DevPackages/ src/ tests/
 
 clean: 
-	rm -rf build $(PACKAGE_NAME)
+	$(RM) build $(PACKAGE_NAME)
