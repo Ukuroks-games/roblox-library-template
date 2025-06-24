@@ -20,11 +20,28 @@ package: configure
 publish: configure
 	wally publish --project-path build
 
-sourcemap:
-	rojo sourcemap tests.project.json --output sourcemap.json
-
 lint:
-	selene DevPackages/ src/ tests/
+	selene src/ tests/
 
-clean: 
-	$(RM) build $(PACKAGE_NAME)
+./Packages: wally.toml
+	wally install
+
+$(LIBNAME).rbxm: configure
+	rojo build library.project.json --output $@
+
+tests: ./Packages
+	rojo build tests.project.json --output tests.rbxl
+
+tests.rbxl: tests
+
+sourcemap.json: ./Packages
+	rojo sourcemap tests.project.json --output $@
+
+delete-sourcemap: 
+	$(RM) sourcemap.json
+
+# Re gen sourcemap
+sourcemap: delete-sourcemap sourcemap.json
+
+clean:
+	$(RM) build $(PACKAGE_NAME) $(LIBNAME).rbxm
