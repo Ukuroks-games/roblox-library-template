@@ -34,22 +34,30 @@
             "type": "shell",
             "label": "Build tests",
             "detail": "Build tests place",
-            "command": "rojo build tests.project.json --output tests.rbxl && exit",
+            "command": "make tests && exit",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "dependsOn": ["Load depends"]
+            }
         },
         {
             "type": "shell",
-            "label": "Generate sourcemap for tests",
-            "detail": "Generate sourcemap for tests project",
+            "label": "Build rbxm",
+            "detail": "Build rbxm library",
+            "command": "make yourlib.rbxm && exit",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Generate sourcemap",
+            "detail": "Generate sourcemap for this library",
             "command": "make sourcemap && exit",
             "group": {
                 "kind": "none"
-            },
-            "dependsOn": ["Load depends"]
+            }
         },
         {
             "type": "shell",
@@ -58,8 +66,7 @@
             "command": "make lint && exit",
             "group": {
                 "kind": "none",
-            },
-            "dependsOn": ["Load depends"]
+            }
         },
     ],
     "windows": {
