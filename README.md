@@ -2,7 +2,7 @@
 
 Just template of project for roblox game for vscode.
 
-You should replace "yourlib" to name if your library in `Makefile` and `wally.toml`
+You should replace "yourlib" to name if your library in `Makefile` and `wally.toml` and `.vscode/tasks.json`.
 
 ## Usage
 
@@ -28,6 +28,7 @@ To build tests:
 make tests
 ```
 
+or you can run vscode tasks.
 
 ## Projects
 
