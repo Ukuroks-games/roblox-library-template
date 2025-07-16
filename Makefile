@@ -2,9 +2,15 @@ LIBNAME = yourLibName
 
 PACKAGE_NAME = $(LIBNAME)lib.zip
 
-CP = cp -rf
-MV = mv -f
-RM = rm -rf
+ifeq ($(OS),Windows_NT)
+	CP = xcopy /y /-y /s /e
+	MV = move /y /-y
+	RM = del /q /s
+else
+	CP = cp -rf
+	MV = mv -f
+	RM = rm -rf
+endif
 
 BUILD_DIR = build
 
@@ -38,6 +44,8 @@ lint:
 
 $(RBXM_BUILD):	library.project.json	$(SOURCES)
 	rojo build library.project.json --output $@
+
+rbxm: clean-rbxm $(RBXM_BUILD)
 
 tests.rbxl:	./Packages	tests.project.json	$(SOURCES)	tests/test.client.lua
 	rojo build tests.project.json --output $@
