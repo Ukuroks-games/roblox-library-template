@@ -1,4 +1,4 @@
-LIBNAME = yourlib
+LIBNAME = yourLibName
 
 PACKAGE_NAME = $(LIBNAME)lib.zip
 
@@ -20,32 +20,35 @@ $(BUILD_DIR):
 	
 
 
-configure: clean-build $(BUILD_DIR) wally.toml $(SOURCES)
+configure:	clean-build $(BUILD_DIR)	wally.toml	$(SOURCES)
 	$(CP) src/* $(BUILD_DIR)
 	$(CP) wally.toml build/
 
-package: configure $(SOURCES)
-	wally package --output $(PACKAGE_NAME) --project-path $(BUILD_DIR)
+$(PACKAGE_NAME): configure	$(SOURCES)
+	wally package --output $@ --project-path $(BUILD_DIR)
 
-publish: configure $(SOURCES)
+package: $(PACKAGE_NAME)
+	
+
+publish: configure	$(SOURCES)
 	wally publish --project-path $(BUILD_DIR)
 
 lint:
 	selene src/ tests/
 
-$(RBXM_BUILD): library.project.json	$(SOURCES)
+$(RBXM_BUILD):	library.project.json	$(SOURCES)
 	rojo build library.project.json --output $@
 
-tests.rbxl: ./Packages tests.project.json $(SOURCES) tests/test.client.lua
+tests.rbxl:	./Packages	tests.project.json	$(SOURCES)	tests/test.client.lua
 	rojo build tests.project.json --output $@
 
-tests: clean-tests tests.rbxl
+tests:	clean-tests	tests.rbxl
 
-sourcemap.json: ./Packages tests.project.json
+sourcemap.json:	./Packages	tests.project.json
 	rojo sourcemap tests.project.json --output $@
 
 # Re gen sourcemap
-sourcemap: clean-sourcemap sourcemap.json
+sourcemap:	clean-sourcemap	sourcemap.json
 
 
 clean-sourcemap: 
@@ -60,15 +63,6 @@ clean-tests:
 clean-build:
 	$(RM) $(BUILD_DIR)
 
-clean: clean-tests clean-build clean-rbxm
+clean:	clean-tests	clean-build	clean-rbxm
 	$(RM) $(PACKAGE_NAME) ourcemap.json: ./Packages
 	rojo sourcemap tests.project.json --output $@
-
-delete-sourcemap: 
-	$(RM) sourcemap.json
-
-# Re gen sourcemap
-sourcemap: delete-sourcemap sourcemap.json
-
-clean:
-	$(RM) build $(PACKAGE_NAME) $(LIBNAME).rbxm
