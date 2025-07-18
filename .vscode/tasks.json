@@ -44,7 +44,7 @@
             "type": "shell",
             "label": "Build rbxm",
             "detail": "Build rbxm library",
-            "command": "make yourlib.rbxm && exit",
+            "command": "make rbxm && exit",
             "group": {
                 "kind": "build",
                 "isDefault": true
