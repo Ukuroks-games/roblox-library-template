@@ -6,7 +6,11 @@ You should replace "yourlib" to name if your library in `Makefile` and `wally.to
 
 ## Usage
 
-It using makefile for build wally package and some another things.
+It using makefile for build wally package and some another things. 
+
+Make will load depends from `wally.toml` automatically if it needed.
+
+You can use this commands with vscode tasks.
 
 To creating package:
 ```sh
@@ -20,7 +24,7 @@ make publish
 
 To build rbxm:
 ```sh
-make yourlib.rbxm
+make rbxm
 ```
 
 To build tests:
@@ -28,12 +32,15 @@ To build tests:
 make tests
 ```
 
+To generate sourcemap:
+```sh
+make sourcemap
+```
+
 or you can run vscode tasks.
 
 ## Projects
 
-`tests.project.json` - project with unit
+`tests.project.json` - project with unit tests
+
 `library.project.json` - project for build rbxm
-
-
-
