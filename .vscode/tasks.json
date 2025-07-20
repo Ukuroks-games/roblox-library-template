@@ -13,7 +13,7 @@
         {
             "type": "shell",
             "label": "Load depends",
-            "command": "wally install && exit",
+            "command": "make Packages && exit",
             "group": {
                 "kind": "none"
             },
