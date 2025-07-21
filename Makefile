@@ -16,7 +16,9 @@ BUILD_DIR = build
 
 RBXM_BUILD = $(LIBNAME)lib.rbxm
 
-SOURCES = src/yourlib.lua
+SOURCES = src/yourlib.luau
+
+TEST_SOURCES = tests/test.client.luau
 
 $(BUILD_DIR): 
 	mkdir $@
@@ -42,12 +44,12 @@ publish: configure	$(SOURCES)
 lint:
 	selene src/ tests/
 
-$(RBXM_BUILD):	library.project.json	$(SOURCES)
+$(RBXM_BUILD):	library.project.json	$(SOURCES)	./Packages
 	rojo build library.project.json --output $@
 
 rbxm: clean-rbxm $(RBXM_BUILD)
 
-tests.rbxl:	./Packages	tests.project.json	$(SOURCES)	tests/test.client.lua
+tests.rbxl:	./Packages	tests.project.json	$(SOURCES)	$(TEST_SOURCES)
 	rojo build tests.project.json --output $@
 
 tests:	clean-tests	tests.rbxl
@@ -72,5 +74,5 @@ clean-build:
 	$(RM) $(BUILD_DIR)
 
 clean:	clean-tests	clean-build	clean-rbxm
-	$(RM) $(PACKAGE_NAME) ourcemap.json: ./Packages
+	$(RM) $(PACKAGE_NAME) sourcemap.json: ./Packages
 	rojo sourcemap tests.project.json --output $@
