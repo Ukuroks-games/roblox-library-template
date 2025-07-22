@@ -32,7 +32,7 @@ configure:	clean-build $(BUILD_DIR)	wally.toml	$(SOURCES)
 	$(CP) src/* $(BUILD_DIR)
 	$(CP) wally.toml build/
 
-$(PACKAGE_NAME): configure	$(SOURCES)
+$(PACKAGE_NAME):	configure	$(SOURCES)
 	wally package --output $@ --project-path $(BUILD_DIR)
 
 package: $(PACKAGE_NAME)
@@ -73,6 +73,5 @@ clean-tests:
 clean-build:
 	$(RM) $(BUILD_DIR)
 
-clean:	clean-tests	clean-build	clean-rbxm
-	$(RM) $(PACKAGE_NAME) sourcemap.json: ./Packages
-	rojo sourcemap tests.project.json --output $@
+clean:	clean-tests	clean-build	clean-rbxm	clean-sourcemap
+	$(RM) $(PACKAGE_NAME) ./Packages
