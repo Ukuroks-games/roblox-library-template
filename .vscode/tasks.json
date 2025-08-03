@@ -13,7 +13,7 @@
         {
             "type": "shell",
             "label": "Load depends",
-            "command": "make Packages && exit",
+            "command": "make Packages -j$(nproc) && exit",
             "group": {
                 "kind": "none"
             },
@@ -25,16 +25,25 @@
             "type": "shell",
             "label": "Publish",
             "detail": "Putblish this library as wally package",
-            "command": "make publish && exit",
+            "command": "make publish -j$(nproc) && exit",
             "group": {
                 "kind": "none"
             },
         },
         {
             "type": "shell",
+            "label": "Package",
+            "detail": "Build wally .zip package",
+            "command": "make package -j$(nproc) && exit",
+            "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "type": "shell",
             "label": "Build tests",
             "detail": "Build tests place",
-            "command": "make tests && exit",
+            "command": "make tests -j$(nproc) && exit",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -44,7 +53,7 @@
             "type": "shell",
             "label": "Build rbxm",
             "detail": "Build rbxm library",
-            "command": "make rbxm && exit",
+            "command": "make rbxm -j$(nproc) && exit",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -52,9 +61,18 @@
         },
         {
             "type": "shell",
+            "label": "Clean",
+            "detail": "Clean builded files",
+            "command": "make clean -j$(nproc) && exit",
+            "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "type": "shell",
             "label": "Generate sourcemap",
             "detail": "Generate sourcemap for this library",
-            "command": "make sourcemap && exit",
+            "command": "make sourcemap -j$(nproc) && exit",
             "group": {
                 "kind": "none"
             }
@@ -63,11 +81,11 @@
             "type": "shell",
             "label": "Lint",
             "detail": "Run selene",
-            "command": "make lint && exit",
+            "command": "make lint -j$(nproc) && exit",
             "group": {
                 "kind": "none",
             }
-        },
+        }
     ],
     "windows": {
         "options": {
