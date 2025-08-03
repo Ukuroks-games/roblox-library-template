@@ -16,10 +16,6 @@ repository = "https://github/"
 
 authors = ["You <you mail>"]
 
-exclude = ["*"]
-
-include = ["src", "src/**", "wally.toml", "README.md", "init.lua"]
-
 private = false
 
 [dependencies]
