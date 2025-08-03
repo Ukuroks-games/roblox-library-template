@@ -29,5 +29,5 @@
 
 	"luau-lsp.sourcemap.rojoProjectFile": "${workspaceFolderBasename}.project.json",
 	"luau-lsp.platform.type": "roblox",
-	"luau-lsp.sourcemap.generatorCommand": "make sourcemap",
+	"luau-lsp.sourcemap.generatorCommand": "make sourcemap -j$(nproc)",
 }
