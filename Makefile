@@ -23,29 +23,40 @@ TEST_SOURCES = tests/test.client.luau
 $(BUILD_DIR): 
 	mkdir $@
 
-./Packages: wally.toml
+wallyInstall:	wally.toml
 	wally install
-	
+	rojo sourcemap defaultTests.project.json --output sourcemap.json
+
+wally.lock:	wallyInstall
+
+./Packages:	wallyInstall
+	wally-package-types --sourcemap sourcemap.json $@
+
+./DevPackages:	wallyInstall
+	wally-package-types --sourcemap sourcemap.json $@
 
 
-configure:	clean-build $(BUILD_DIR)	wally.toml	$(SOURCES)
-	$(CP) src/* $(BUILD_DIR)
+BUILD_SOURCES = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES)))
+
+$(BUILD_DIR)/wally.toml:	$(BUILD_DIR)	wally.toml
 	$(CP) wally.toml build/
 
-$(PACKAGE_NAME):	configure	$(SOURCES)
-	wally package --output $@ --project-path $(BUILD_DIR)
+MV_SOURCES:	$(BUILD_DIR)	$(SOURCES)
+	$(CP) src/* $(BUILD_DIR)
 
-package: $(PACKAGE_NAME)
-	
+$(BUILD_SOURCES):	MV_SOURCES
 
-publish: configure	$(SOURCES)
-	wally publish --project-path $(BUILD_DIR)
+
+$(PACKAGE_NAME):	$(BUILD_SOURCES)	$(BUILD_DIR)/wally.toml
+	wally package --output $(PACKAGE_NAME) --project-path $(BUILD_DIR)
 
 lint:
 	selene src/ tests/
 
 $(RBXM_BUILD):	library.project.json	$(SOURCES)	./Packages
 	rojo build library.project.json --output $@
+
+package:	clean-package	clean-build	$(PACKAGE_NAME)
 
 rbxm: clean-rbxm $(RBXM_BUILD)
 
@@ -68,10 +79,12 @@ clean-rbxm:
 	$(RM) $(RBXM_BUILD)
 
 clean-tests:
-	$(RM) tests.rbxl
+	$(RM) $(ALL_TESTS)
 
 clean-build:
-	$(RM) $(BUILD_DIR)
+	$(RM) $(BUILD_DIR)/*
 
-clean:	clean-tests	clean-build	clean-rbxm	clean-sourcemap
-	$(RM) $(PACKAGE_NAME) ./Packages
+clean-package:
+	$(RM) $(PACKAGE_NAME) 
+
+clean:	clean-tests	clean-build	clean-rbxm	clean-package
