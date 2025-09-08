@@ -1,11 +1,11 @@
 {
 	"editor.insertSpaces": false,
 	"[yaml]": {
-        	"editor.insertSpaces": true,
-        	"editor.tabSize": 2,
-        	"editor.autoIndent": "advanced",
-        	"diffEditor.ignoreTrimWhitespace": false
-    	},
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "diffEditor.ignoreTrimWhitespace": false
+    },
 	"[lua]": {
 		"editor.defaultFormatter": "JohnnyMorganz.stylua"
 	},
@@ -29,5 +29,5 @@
 
 	"luau-lsp.sourcemap.rojoProjectFile": "${workspaceFolderBasename}.project.json",
 	"luau-lsp.platform.type": "roblox",
-	"luau-lsp.sourcemap.generatorCommand": "make sourcemap -j$(nproc)",
+	"luau-lsp.sourcemap.generatorCommand": "make sourcemap",
 }

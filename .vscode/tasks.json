@@ -1,31 +1,30 @@
 {
+    "command": "make",
+    "linux": {
+        "args": [
+            "-j$(nproc)"
+        ]
+    },
     "tasks": [
         {
             "type": "shell",
-            "label": "Install programs",
-            "detail": "Install programms using aftman",
-            "command": "aftman install && exit",
-            "group": {
-                "kind": "none"
-            },
-            "problemMatcher": [],
-        },
-        {
-            "type": "shell",
             "label": "Load depends",
-            "command": "make Packages -j$(nproc) && exit",
+            "args": [
+                "Packages"
+            ],
             "group": {
                 "kind": "none"
             },
             "detail": "Install all project depends",
             "problemMatcher": [],
-          
         },
         {
             "type": "shell",
             "label": "Publish",
             "detail": "Putblish this library as wally package",
-            "command": "make publish -j$(nproc) && exit",
+            "args": [
+                "publish"
+            ],
             "group": {
                 "kind": "none"
             },
@@ -34,7 +33,9 @@
             "type": "shell",
             "label": "Package",
             "detail": "Build wally .zip package",
-            "command": "make package -j$(nproc) && exit",
+            "args": [
+                "package"
+            ],
             "group": {
                 "kind": "build"
             }
@@ -43,7 +44,9 @@
             "type": "shell",
             "label": "Build tests",
             "detail": "Build tests place",
-            "command": "make tests -j$(nproc) && exit",
+            "args": [
+                "tests"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -53,7 +56,9 @@
             "type": "shell",
             "label": "Build rbxm",
             "detail": "Build rbxm library",
-            "command": "make rbxm -j$(nproc) && exit",
+            "args": [
+                "rbxm"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -63,7 +68,9 @@
             "type": "shell",
             "label": "Clean",
             "detail": "Clean builded files",
-            "command": "make clean -j$(nproc) && exit",
+            "args": [
+                "clean"
+            ],
             "group": {
                 "kind": "build"
             }
@@ -72,7 +79,9 @@
             "type": "shell",
             "label": "Generate sourcemap",
             "detail": "Generate sourcemap for this library",
-            "command": "make sourcemap -j$(nproc) && exit",
+            "args": [
+                "sourcemap"
+            ],
             "group": {
                 "kind": "none"
             }
@@ -81,10 +90,35 @@
             "type": "shell",
             "label": "Lint",
             "detail": "Run selene",
-            "command": "make lint -j$(nproc) && exit",
+            "args": [
+                "lint"
+            ],
             "group": {
                 "kind": "none",
             }
+        },
+        {
+            "type": "shell",
+            "label": "Build docs",
+            "detail": "Run selene",
+            "args": [
+                "docs"
+            ],
+            "group": {
+                "kind": "build",
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Watch docs",
+            "detail": "Build html docs and watch changes in sources",
+            "args": [
+                "docs-dev"
+            ],
+            "group": {
+                "kind": "build",
+            },
+            "isBackground": true,
         }
     ],
     "windows": {
