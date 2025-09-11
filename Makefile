@@ -19,6 +19,7 @@ TEST_SOURCES = \
 
 ROJO_PROJECTS=projects
 
+# default project for generating sourcemap
 GENERATE_SOURCEMAP = tests
 
 

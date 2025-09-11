@@ -1,4 +1,4 @@
-title = "library name"                                       # From Git
+title = "yourLibName"                                       # From Git
 gitRepoUrl = "https://github.com/Ukuroks-games/roblox-library-template" # From Git
 
 gitSourceBranch = "master"
@@ -14,7 +14,7 @@ favicon = "no"
 
 # From git:
 organizationName = "rg"
-projectName = "Lib"
+projectName = "yourLibName"
 url = "https://127.0.0.1/"
 baseUrl = "/docs Folder"
 tagline = ""

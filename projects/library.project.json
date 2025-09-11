@@ -2,7 +2,7 @@
 	"name": "Packages",
 	"tree": {
 		"$path": "Packages",
-		"yourlib": {
+		"yourLibName": {
 			"$path": "src"
 		}
 	}

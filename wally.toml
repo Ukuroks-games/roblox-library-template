@@ -1,5 +1,5 @@
 [package]
-name = "owner/packagename"
+name = "owner/yourlibname"
 
 description = "description of package"
 
@@ -24,15 +24,12 @@ exclude = [
 
 
 [dependencies]
-a = "egor00f/uilib@0.1.0"
 
 
 [server-dependencies]
-b = "egor00f/giflib@0.3.1"
 
 
 [dev-dependencies]
-b = "egor00f/testlib@0.1.0"
 
 
 [place]
