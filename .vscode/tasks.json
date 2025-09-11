@@ -5,6 +5,11 @@
             "-j$(nproc)"
         ]
     },
+    "osx": {
+        "args": [
+            "-j$(nproc)"
+        ]
+    },
     "tasks": [
         {
             "type": "shell",
@@ -16,7 +21,7 @@
                 "kind": "none"
             },
             "detail": "Install all project depends",
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
             "type": "shell",
@@ -28,6 +33,7 @@
             "group": {
                 "kind": "none"
             },
+            "problemMatcher": []
         },
         {
             "type": "shell",
@@ -84,18 +90,21 @@
             ],
             "group": {
                 "kind": "none"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "type": "shell",
             "label": "Lint",
             "detail": "Run selene",
             "args": [
-                "lint"
+                "lint",
+                "--ignore-errors"
             ],
             "group": {
-                "kind": "none",
-            }
+                "kind": "none"
+            },
+            "problemMatcher": []
         },
         {
             "type": "shell",
@@ -105,7 +114,7 @@
                 "docs"
             ],
             "group": {
-                "kind": "build",
+                "kind": "build"
             }
         },
         {
@@ -116,10 +125,10 @@
                 "docs-dev"
             ],
             "group": {
-                "kind": "build",
+                "kind": "build"
             },
-            "isBackground": true,
-        }
+            "isBackground": true
+        },
     ],
     "windows": {
         "options": {

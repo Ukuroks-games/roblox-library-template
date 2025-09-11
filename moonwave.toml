@@ -1,0 +1,24 @@
+title = "library name"                                       # From Git
+gitRepoUrl = "https://github.com/Ukuroks-games/roblox-library-template" # From Git
+
+gitSourceBranch = "master"
+changelog = true
+classOrder = []
+
+includeReadme = true
+
+[docusaurus]
+onBrokenLinks = "throw"
+onBrokenMarkdownLinks = "warn"
+favicon = "no"
+
+# From git:
+organizationName = "rg"
+projectName = "Lib"
+url = "https://127.0.0.1/"
+baseUrl = "/docs Folder"
+tagline = ""
+
+[footer]
+style = "dark"
+copyright = "Copyright © 2025 you. Built with Moonwave and Docusaurus"

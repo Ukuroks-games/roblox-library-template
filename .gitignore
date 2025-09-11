@@ -16,3 +16,5 @@ ServerPackages/
 
 build/
 *.zip
+
+/*.project.json

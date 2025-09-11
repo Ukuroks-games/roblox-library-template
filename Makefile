@@ -12,74 +12,97 @@ else
 	RM = rm -rf
 endif
 
+##### CONFIG #############
+
+# build directory. you can change it to `/tmp` or `%Temp%`
 BUILD_DIR = build
 
 RBXM_BUILD = $(LIBNAME)lib.rbxm
 
 SOURCES = \
-	src/init.luau
+	src/init.luau	\
+	src/module/init.luau
 
 TEST_SOURCES = \
 	tests/test.client.luau
+
+ROJO_PROJECTS=projects
+
+GENERATE_SOURCEMAP = tests
+
+############
+
+FULL_GENERATE_SOURCEMAP = $(ROJO_PROJECTS)/$(GENERATE_SOURCEMAP).project.json
 
 
 $(BUILD_DIR): 
 	mkdir $@
 
 
-wallyInstall:	wally.toml
+BUILD_SRC_DIR=$(BUILD_DIR)/src
+$(BUILD_SRC_DIR): $(BUILD_DIR)
+	mkdir $@
+
+wally.lock	./Packages	./DevPackages	./ServerPackages &:	wally.toml
 	wally install
-	rojo sourcemap defaultTests.project.json --output sourcemap.json
 
-wally.lock:	wallyInstall
+$(BUILD_DIR)/%Dir:	./% $(BUILD_DIR)	.WAIT	sourcemap.json
+	touch $@
+	-wally-package-types --sourcemap sourcemap.json $<
 
-./Packages:	wallyInstall
-	-wally-package-types --sourcemap sourcemap.json $@
-
-./DevPackages:	wallyInstall
-	-wally-package-types --sourcemap sourcemap.json $@
-
-
-BUILD_SOURCES = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES)))
-
-$(BUILD_DIR)/wally.toml:	$(BUILD_DIR)	wally.toml
-	$(CP) wally.toml build/
-
-MV_SOURCES:	$(BUILD_DIR)	$(SOURCES)
-	$(CP) src/* $(BUILD_DIR)
-
-$(BUILD_SOURCES):	MV_SOURCES
+PackagesDir = $(BUILD_DIR)/PackagesDir
+DevPackagesDir = $(BUILD_DIR)/DevPackagesDir
+ServerPackagesDir = $(BUILD_DIR)/ServerPackagesDir
 
 
-$(PACKAGE_NAME):		$(BUILD_DIR)/wally.toml
-	wally package --output $(PACKAGE_NAME) --project-path $(BUILD_DIR)
+BUILD_SOURCES = $(addprefix $(BUILD_DIR)/, $(SOURCES))
+
+$(BUILD_SRC_DIR)/wally.toml:	wally.toml	|	$(BUILD_SRC_DIR)
+	$(CP) wally.toml $(BUILD_SRC_DIR)
+
+$(BUILD_SRC_DIR)/%.luau:	src/%.luau	|	$(BUILD_SRC_DIR)
+	mkdir -p $(BUILD_DIR)/$(dir $<)
+	$(CP) $< $@
+
+$(PACKAGE_NAME):		$(BUILD_SRC_DIR)/wally.toml	$(BUILD_SOURCES)
+	echo $(BUILD_SOURCES)
+	wally package --output $(PACKAGE_NAME) --project-path $(BUILD_SRC_DIR)
 
 
 # build .zip package
-package:	clean-build	$(PACKAGE_NAME)
+package:	$(PACKAGE_NAME)
 
 # publish library
-publish:	clean-build	$(BUILD_DIR)/wally.toml	$(BUILD_SOURCES)
-	wally publish --project-path $(BUILD_DIR)
+publish:	$(BUILD_SRC_DIR)/wally.toml	$(BUILD_SOURCES)
+	wally publish --project-path $(BUILD_SRC_DIR)
 
 
-$(RBXM_BUILD):	library.project.json	$(SOURCES)	./Packages
-	rojo build library.project.json --output $@
+# copy project to root for rojo
+%.project.json: projects/%.project.json
+	make "GENERATE_SOURCEMAP=$*" $@
 
+
+$(RBXM_BUILD):	library.project.json	$(SOURCES)	$(PackagesDir)
+	rojo build $< --output $@
+
+# Build rbxm library
 rbxm:	$(RBXM_BUILD)
 
 
+$(GENERATE_SOURCEMAP).project.json:	$(FULL_GENERATE_SOURCEMAP)
+	$(CP) $< $@
 
-tests.rbxl:	./Packages	tests.project.json	$(SOURCES)	$(TEST_SOURCES)
+tests.rbxl:	$(PackagesDir)	$(DevPackagesDir)	tests.project.json	$(SOURCES)	$(TEST_SOURCES)
 	rojo build tests.project.json --output $@
 
-
-tests:	\
+ALL_TESTS = \
 	tests.rbxl
+
+tests:	$(ALL_TESTS)
 
 
 # build sourcemap
-sourcemap.json:	./Packages	tests.project.json
+sourcemap.json:	$(PackagesDir)	tests.project.json
 	rojo sourcemap tests.project.json --output $@
 
 # Re gen sourcemap
@@ -102,13 +125,15 @@ $(BUILD_DIR)/html:	$(NPM_ROOT)/.bin/moonwave moonwave.toml	$(SOURCES)
 docs:	$(BUILD_DIR)/html
 
 # Watch docs
-docs-dev:
+docs-dev:	clean-docs
 	make "MOONWAVE_CMD=dev" docs
 
 
+SELENE_FLAGS=
 
 lint:
-	selene src/ tests/
+	selene $(SELENE_FLAGS) src/ tests/
+
 
 clean-sourcemap: 
 	$(RM) sourcemap.json
@@ -125,4 +150,29 @@ clean-build:
 clean-package:
 	$(RM) $(PACKAGE_NAME) 
 
-clean:	clean-tests	clean-build	clean-rbxm	clean-package
+clean-docs:
+	$(RM) $(BUILD_DIR)/html
+
+clean-src:
+	$(RM) $(BUILD_SRC_DIR)
+
+clean:	clean-tests	clean-rbxm	clean-package	clean-docs	clean-src
+
+
+.PHONY:	\
+	lint	\
+	clean	\
+	clean-sourcemap	\
+	clean-package	\
+	clean-rbxm	\
+	clean-tests	\
+	clean-build	\
+	docs	\
+	docs-dev	\
+	sourcemap	\
+	rbxm	\
+	wallyInstall	\
+	publish	\
+	package	\
+	%(BUILD_DIR)/%Dir
+
