@@ -1,18 +1,9 @@
+##### CONFIG #############
+
+
 LIBNAME = yourLibName
 
 PACKAGE_NAME = $(LIBNAME)lib.zip
-
-ifeq ($(OS),Windows_NT)
-	CP = xcopy /y /-y /s /e
-	MV = move /y /-y
-	RM = del /q /s
-else
-	CP = cp -rf
-	MV = mv -f
-	RM = rm -rf
-endif
-
-##### CONFIG #############
 
 # build directory. you can change it to `/tmp` or `%Temp%`
 BUILD_DIR = build
@@ -30,10 +21,30 @@ ROJO_PROJECTS=projects
 
 GENERATE_SOURCEMAP = tests
 
-############
+
+##########################
+##### Deps ###############
+
+
+tests.rbxl:	tests.project.json	$(PackagesDir)	$(DevPackagesDir)	$(SOURCES)	$(TEST_SOURCES)
+	$(DEFAULT_RBXL_BUILD)
+
+
+##########################
 
 FULL_GENERATE_SOURCEMAP = $(ROJO_PROJECTS)/$(GENERATE_SOURCEMAP).project.json
 
+DEFAULT_RBXL_BUILD = rojo build $< --output $@
+
+ifeq ($(OS),Windows_NT)
+	CP = xcopy /y /-y /s /e
+	MV = move /y /-y
+	RM = del /q /s
+else
+	CP = cp -rf
+	MV = mv -f
+	RM = rm -rf
+endif
 
 $(BUILD_DIR): 
 	mkdir $@
@@ -92,8 +103,6 @@ rbxm:	$(RBXM_BUILD)
 $(GENERATE_SOURCEMAP).project.json:	$(FULL_GENERATE_SOURCEMAP)
 	$(CP) $< $@
 
-tests.rbxl:	$(PackagesDir)	$(DevPackagesDir)	tests.project.json	$(SOURCES)	$(TEST_SOURCES)
-	rojo build tests.project.json --output $@
 
 ALL_TESTS = \
 	tests.rbxl

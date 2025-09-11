@@ -2,7 +2,8 @@
     "command": "make",
     "linux": {
         "args": [
-            "-j$(nproc)"
+            "-j$(nproc)",
+            "\"BUILD_DIR=/tmp/${workspaceFolderBasename}\""
         ]
     },
     "osx": {
