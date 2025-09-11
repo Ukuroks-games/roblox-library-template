@@ -23,12 +23,15 @@ GENERATE_SOURCEMAP = tests
 
 
 ##########################
-##### Deps ###############
+##### Tests ###############
 
 
 tests.rbxl:	tests.project.json	$(PackagesDir)	$(DevPackagesDir)	$(SOURCES)	$(TEST_SOURCES)
 	$(DEFAULT_RBXL_BUILD)
 
+
+ALL_TESTS = \
+	tests.rbxl
 
 ##########################
 
@@ -104,9 +107,6 @@ $(GENERATE_SOURCEMAP).project.json:	$(FULL_GENERATE_SOURCEMAP)
 	$(CP) $< $@
 
 
-ALL_TESTS = \
-	tests.rbxl
-
 tests:	$(ALL_TESTS)
 
 
@@ -176,6 +176,8 @@ clean:	clean-tests	clean-rbxm	clean-package	clean-docs	clean-src
 	clean-rbxm	\
 	clean-tests	\
 	clean-build	\
+	clean-docs	\
+	clean-src	\
 	docs	\
 	docs-dev	\
 	sourcemap	\
