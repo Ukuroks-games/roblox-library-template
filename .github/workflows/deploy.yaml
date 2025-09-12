@@ -1,4 +1,4 @@
-name: Lint
+name: Deploy
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   Lint:
-    name: Lint
+    name: Deploy tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -21,5 +21,5 @@ jobs:
       - name: Install Aftman
         uses: ok-nick/setup-aftman@v0.4.2
 
-      - name: Lint
-        run: make lint
+      - name: Deploy
+        run: make "PLACE_ID=" "GAME_ID=" "PUBLISH_TOKEN=${{ secrets.GITHUB_TOKEN }}" publish-tests

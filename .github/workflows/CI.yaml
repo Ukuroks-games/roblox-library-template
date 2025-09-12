@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Aftman
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      - name: Lint
+        run: make lint
+
+  style:
+    name: Styling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: StyLua
+        uses: JohnnyMorganz/stylua-action@v4.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check ./src ./tests

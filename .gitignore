@@ -18,3 +18,5 @@ build/
 *.zip
 
 /*.project.json
+
+node_modules/

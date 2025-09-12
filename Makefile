@@ -91,6 +91,13 @@ package:	$(PACKAGE_NAME)
 publish:	$(BUILD_SRC_DIR)/wally.toml	$(BUILD_SOURCES)
 	wally publish --project-path $(BUILD_SRC_DIR)
 
+PLACE_ID=
+GAME_ID=
+PUBLISH_TOKEN=DO NOT SET IT IN MAKEFILE!!! USE `make "PUBLISH_TOKEN=${{ secrets.GITHUB_TOKEN }}" publish-placeName` in actions
+
+publish-%: %.rbxl
+	rbxcloud experience publish -f $*.rbxl -p $(PLACE_ID) -u $(GAME_ID) -t published -a $(PUBLISH_TOKEN)
+
 
 # copy project to root for rojo
 %.project.json: projects/%.project.json
